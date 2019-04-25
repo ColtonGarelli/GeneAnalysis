@@ -12,6 +12,11 @@ Welcome to Gene Analysis Project's documentation!
 
    modules
 
+   Bioinformatics Resources
+   Data Analysis with Python
+   Pytest Resources
+   Python Resources
+
 
 
 Indices and tables

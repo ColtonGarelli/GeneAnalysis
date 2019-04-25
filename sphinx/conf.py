@@ -15,8 +15,9 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
-# sys.path.insert(0, os.path.abspath('../Source'))
-
+sys.path.insert(0, os.path.abspath('../Source'))
+sys.path.insert(0, os.path.abspath('../Source/MVC'))
+autodoc_mock_imports = ['Bio',]
 # -- Project information -----------------------------------------------------
 
 project = 'CLE'
@@ -47,6 +48,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -74,7 +76,7 @@ language = None
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
+pygments_style = 'sphinx'
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -83,25 +85,27 @@ pygments_style = None
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_theme_path = ["_themes", ]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
+# 'canonical_url': '',
+# 'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
+#
 html_theme_options = {
-    'canonical_url': '',
-    'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
     'logo_only': False,
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
     'style_external_links': False,
     # 'vcs_pageview_mode': '',
-    'style_nav_header_background': 'dark blue',
+    # 'style_nav_header_background': 'dark blue',
     # Toc options
     'collapse_navigation': True,
-    'sticky_navigation': False,
-    'navigation_depth': -1,
-    'includehidden': True,
+    # 'sticky_navigation': False,
+    # 'navigation_depth': -1,
+    # 'includehidden': True,
     'titles_only': False
 }
 

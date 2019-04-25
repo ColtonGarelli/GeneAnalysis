@@ -5,15 +5,7 @@ Gene Analysis project
 from Bio import Geo
 
 
-
-def func():
-    """
-    main docs
-    :return:
-    """
-    pass
-
-
 if __name__ == '__main__':
-    pass
+    # print(robjects.DataFrame([2,3,4]))
+    print('hello')
 

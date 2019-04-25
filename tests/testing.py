@@ -1,4 +1,3 @@
-
 from Bio import Geo
 import pytest
 
@@ -19,5 +18,3 @@ def test_the_test():
     assert 1 == 2, "some stuff to test message"
 
 
-if __name__ == '__main__':
-    pytest.main()

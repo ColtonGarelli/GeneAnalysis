@@ -1,0 +1,3 @@
+
+
+To document new modules: sphinx-apidoc -f -o docs/source projectdir

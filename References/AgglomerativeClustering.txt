@@ -1,0 +1,28 @@
+
+# for gene correlations with python
+https://stackoverflow.com/questions/33997753/calculating-pairwise-correlation-among-all-columns
+
+data = customer_data.iloc[:, 3:5].values
+
+import scipy.cluster.hierarchy as shc
+
+plt.figure(figsize=(10, 7))
+plt.title("Customer Dendograms")
+dend = shc.dendrogram(shc.linkage(data, method='ward'))
+(dendrogram)
+
+
+from sklearn.cluster import AgglomerativeClustering
+# To create a discrete # of clusters
+cluster = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
+cluster.fit_predict(data)
+plt.figure(figsize=(10, 7))
+plt.scatter(data[:,0], data[:,1], c=cluster.labels_, cmap='rainbow')
+
+# seaborn clustermap
+
+>>> import seaborn as sns; sns.set(color_codes=True)
+
+>>> iris = sns.load_dataset("iris")
+>>> species = iris.pop("species")
+>>> g = sns.clustermap(iris)

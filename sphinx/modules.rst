@@ -2,6 +2,11 @@ Source
 ======
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
 
-   Source
+   MVC
+   Visualization
+   custom_errors
+   file_in
+   gene_stats
+   main

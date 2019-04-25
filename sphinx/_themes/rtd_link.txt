@@ -1,0 +1,1 @@
+/Users/coltongarelli/anaconda3/envs/GeneAnalysis/lib/python3.6/site-packages/sphinx_rtd_theme
