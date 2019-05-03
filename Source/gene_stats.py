@@ -23,4 +23,25 @@ def value_cutoff(*upper, lower, df, col_name):
     """
 
 
+def find_common_genes(frames: [pd.DataFrame]):
+    """Takes a list of dataframes and returns a dataframe containing only common genes.
 
+    Filter out uncommon genes from a set of dataframes. Useful for comparing gene targets from different
+    tissues/cell types/diseases where constitutive expression may vary.
+    Args:
+        frames: a list of Pandas DataFrames containing transcription data
+
+    Returns:
+        A Pandas DataFrame where
+
+    """
+    # Drop values that don't have shared genes (symbol column)
+    for i1 in range(len(frames)-1):
+        if i1 == 0:
+            common = pd.merge(frames[i1], frames[i1+1], left_index=True, right_index=True)
+        else:
+            temp = common.copy(deep=True)
+            temp = pd.merge(temp, frames[i1+1], left_index=True, right_index=True)
+            if not temp.empty:
+                common = temp
+    return common

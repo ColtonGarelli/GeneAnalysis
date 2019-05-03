@@ -19,10 +19,9 @@ def setup_good_dfs():
          '/Users/coltongarelli/pyLibraries/GeneAnalysis/tests/testing_files/good_med_dataset1.csv',
          '/Users/coltongarelli/pyLibraries/GeneAnalysis/tests/testing_files/good_large_dataset1.csv']
     dfs = [pd.read_csv(i).set_index('symbol').rename_axis(index='symbol') for i in test_files1]
-    # for i in dfs:
-    #     i.set_index('symbol')
-    #     i.rename_axis(index='symbol')
-    return dfs
+
+    yield dfs
+
 
 @pytest.fixture()
 def setup_bad_dfs():
@@ -34,7 +33,7 @@ def setup_bad_dfs():
     dfs = [pd.read_csv(i).set_index('symbol').rename_axis(index='symbol') for i in fail_test_files]
     # for i in dfs:
     #     i.set_index('symbol')
-    return dfs
+    yield dfs
 
 def test_column_name_norm(setup_good_dfs):
     """
