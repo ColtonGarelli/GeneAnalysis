@@ -5,7 +5,7 @@
 import pandas as pd
 
 
-def value_cutoff(*upper, lower, df, col_name):
+def value_cutoff(df: pd.DataFrame, col_name, upper, lower=None):
     """Removes rows containing values **WITHIN** the given range (upper, lower) in the specified column in the df passed
 
     A df containing data is passed in. The function removes the entire row when a value contained in the specified column
@@ -23,6 +23,15 @@ def value_cutoff(*upper, lower, df, col_name):
 
     Returns: A Dataframe containing only the filtered data
     """
+    if lower is None:
+        # everything less than the upperbound
+        new_df = df[df[col_name] < upper]
+        return new_df
+    else:
+        new_df = pd.DataFrame(df[df[col_name] < lower])
+        new_df = pd.concat([new_df, df[df[col_name] > upper]])
+        return new_df
+
 
 
 def find_common_genes(frames: [pd.DataFrame]):
@@ -38,12 +47,19 @@ def find_common_genes(frames: [pd.DataFrame]):
 
     """
     # Drop values that don't have shared genes (symbol column)
+    common = pd.DataFrame()
     for i1 in range(len(frames)-1):
+        # frame1_dtype = frames[i1].dtypes.to_dict()
+        # frame2_dtype = frames[i1+1].dtypes.to_dict()
         if i1 == 0:
-            common = pd.merge(frames[i1], frames[i1+1], left_index=True, right_index=True)
+            common = frames[i1].join(frames[i1+1], how='inner')
         else:
             temp = common.copy(deep=True)
-            temp = pd.merge(temp, frames[i1+1], left_index=True, right_index=True)
+            temp = temp.join(frames[i1+1], how='inner')
             if not temp.empty:
                 common = temp
+            else:
+                # If nothing in common between two of the frames
+                # Return empty frame
+                return pd.DataFrame()
     return common
