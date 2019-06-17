@@ -5,11 +5,28 @@
 import pandas as pd
 
 
+def subset_genes(df: pd.DataFrame, list_of_genes: pd.Series or list):
+    """
+
+    Args:
+        df:
+        list_of_genes:
+
+    Returns:
+
+    """
+    new_df = df.copy(deep=True)
+    if type(list_of_genes) is list:
+        list_of_genes = pd.Series(list_of_genes)
+    else:
+        new_df
+
+
 def value_cutoff(df: pd.DataFrame, col_name, upper, lower=None):
-    """Removes rows containing values **WITHIN** the given range (upper, lower) in the specified column in the df passed
+    """Removes rows containing values above an upper bound or **within** a range (upper, lower)...(NON-INCLUSIVE)
 
     A df containing data is passed in. The function removes the entire row when a value contained in the specified column
-    (col_name) falls within the range. For log2FC DEG analysis, upper and lower bounds should be provided. Only a lower
+    (col_name) falls within the range. For logFC DEG analysis, upper and lower bounds should be provided. Only a lower
     bound is required for p-values (will remove everything >lower bound).
 
 
@@ -33,7 +50,6 @@ def value_cutoff(df: pd.DataFrame, col_name, upper, lower=None):
         return new_df
 
 
-
 def find_common_genes(frames: [pd.DataFrame]):
     """Takes a list of dataframes and returns a dataframe containing only common genes.
 
@@ -49,17 +65,24 @@ def find_common_genes(frames: [pd.DataFrame]):
     # Drop values that don't have shared genes (symbol column)
     common = pd.DataFrame()
     for i1 in range(len(frames)-1):
-        # frame1_dtype = frames[i1].dtypes.to_dict()
-        # frame2_dtype = frames[i1+1].dtypes.to_dict()
         if i1 == 0:
             common = frames[i1].join(frames[i1+1], how='inner')
         else:
             temp = common.copy(deep=True)
             temp = temp.join(frames[i1+1], how='inner')
             if not temp.empty:
-                common = temp
+                common = temp.copy(deep=True)
             else:
                 # If nothing in common between two of the frames
                 # Return empty frame
                 return pd.DataFrame()
     return common
+
+
+def drop_cols(df: pd.DataFrame, cols_to_drop):
+    return df.drop(columns=cols_to_drop, inplace=True)
+
+
+def remove_duplicate_indicies(df: pd.DataFrame):
+    return df.loc[~df.index.duplicated(keep='first')]
+
