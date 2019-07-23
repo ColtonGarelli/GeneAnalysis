@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../Source/MVC'))
 autodoc_mock_imports = ['Bio',]
 # -- Project information -----------------------------------------------------
 
-project = 'CLE'
+project = 'Gene Expression Analysis'
 copyright = '2019, Colton Garelli & Jillian Richmond'
 author = 'Colton Garelli & Jillian Richmond'
 
