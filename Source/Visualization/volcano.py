@@ -1,14 +1,13 @@
-import plotly as py
+import plotly.offline as py
 # import plotly.plotly as py
 import plotly.graph_objs as go
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import seaborn as sns
 import numpy as np
-from gene_stats import log_transform
+from functions.differential_expression import log_transform
 
-py.tools.set_credentials_file(username='coltongarelli', api_key='OeZDThyslDgaGROfcb2m')
+# py.tools.set_credentials_file(username='coltongarelli', api_key='xRJ5tPIjCkx8pz17KWzl')
 
 
 

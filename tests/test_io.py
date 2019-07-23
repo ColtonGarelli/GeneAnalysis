@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-import file_in
+from functions import file_in
 import os
 
 

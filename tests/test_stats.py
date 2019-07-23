@@ -1,5 +1,3 @@
-import gene_stats
-
 # a list of p_values to adjust
 p_values = None
 

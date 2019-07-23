@@ -1,10 +1,8 @@
-import Source.file_in as file_in
-import Source.modify_dataframes as modify_dataframes
+import functions.file_in as file_in
+import functions.modify_dataframes as modify_dataframes
 import Source.Visualization.heatmap as heatmap
 import os
 import ntpath
-from rpy2 import robjects
-import rpy2
 
 # obj = robjects.DataFrame(rpy2.robjects.)
 

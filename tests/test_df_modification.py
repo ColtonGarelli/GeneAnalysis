@@ -1,8 +1,7 @@
 import pytest
 import pandas as pd
-import modify_dataframes
 import os
-import file_in
+from functions import file_in, modify_dataframes
 
 
 class TestingFiles:

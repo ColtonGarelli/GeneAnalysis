@@ -1,11 +1,9 @@
-import file_in as file_in
-import modify_dataframes
+from functions import file_in as file_in, modify_dataframes
 import Visualization.volcano
 import os
 import pandas as pd
 import ntpath
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 master_dfs = list()
 paths = ""
