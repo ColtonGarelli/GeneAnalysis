@@ -1,3 +1,6 @@
-
+RST format: http://docutils.sourceforge.net/docs/user/rst/quickref.html
+    https://github.com/lsegal/atom-rst-preview
 
 To document new modules: sphinx-apidoc -f -o docs/source projectdir
+
+Update html with new docstrings or module docs: make clean, make html

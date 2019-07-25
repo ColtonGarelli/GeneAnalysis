@@ -123,5 +123,6 @@ def infer_file_name(path):
     """
     Dataframes of imported data will be hashed to the name of the file. All of the files should reside
     in the same folder
-    :return:
+    Return:
+
     """

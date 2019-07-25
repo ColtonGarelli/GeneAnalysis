@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>functions package &mdash; Gene Expression Analysis 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bioinformatics Resources" href="Bioinformatics Resources.html" />
+    <link rel="prev" title="Visualization package" href="Visualization.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Gene Expression Analysis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html">Visualization package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">functions package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.differential_expression">functions.differential_expression module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.file_in">functions.file_in module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.file_out">functions.file_out module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.gene_ontology">functions.gene_ontology module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.gene_stats">functions.gene_stats module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.interface_r">functions.interface_r module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.modify_dataframes">functions.modify_dataframes module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions.parse_geo">functions.parse_geo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-functions">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Bioinformatics Resources.html">Bioinformatics Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Gene Analysis with Python.html">Gene Analysis with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data Analysis with Python.html">Data Analysis with Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pytest Resources.html">Pytest Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html">Python Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Gene Expression Analysis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Source</a> &raquo;</li>
+        
+      <li>functions package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="functions-package">
+<h1>functions package<a class="headerlink" href="#functions-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-functions.differential_expression">
+<span id="functions-differential-expression-module"></span><h2>functions.differential_expression module<a class="headerlink" href="#module-functions.differential_expression" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="functions.differential_expression.calculate_FC">
+<code class="sig-prename descclassname">functions.differential_expression.</code><code class="sig-name descname">calculate_FC</code><span class="sig-paren">(</span><em class="sig-param">differential_data: pandas.core.frame.DataFrame</em>, <em class="sig-param">baseline_data: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/functions/differential_expression.html#calculate_FC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.differential_expression.calculate_FC" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Calculates fold change from expression counts</dt><dd><p>Calculates fold change (FC) using control data and experiment data ( (experimental/baseline) - 1 ).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>differential_data</strong> – Data from some experimental group (disease, treated, time course, etc.)</p></li>
+<li><p><strong>baseline_data</strong> – Data from a control group (untreated, healthy, time = 0, etc.)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: pandas df containing Fold Change calculation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.differential_expression.log_transform">
+<code class="sig-prename descclassname">functions.differential_expression.</code><code class="sig-name descname">log_transform</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">col: str</em>, <em class="sig-param">logbase=2</em><span class="sig-paren">)</span> &#x2192; tuple<a class="reference internal" href="_modules/functions/differential_expression.html#log_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.differential_expression.log_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log transform data by log2 or log10
+Perform a log transformation on FC data to eliminate bias between under and over-expressed genes,
+p-value data for volcano plot, or other log transformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – a DataFrame containing some (but not only) data to log transform</p></li>
+<li><p><strong>col</strong> – column if str or list of columns of df to perform log transformation on</p></li>
+<li><p><strong>logbase</strong> – the log base to transform data by (default is log2)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions.file_in">
+<span id="functions-file-in-module"></span><h2>functions.file_in module<a class="headerlink" href="#module-functions.file_in" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="functions.file_in.check_col_names">
+<code class="sig-prename descclassname">functions.file_in.</code><code class="sig-name descname">check_col_names</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_in.html#check_col_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_in.check_col_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inspect a file for column names
+Attempt to determine columns containing relevant information. In this case, relevant information is some form of
+of a p-value, log transformed fold change data (some form of logfc), and a gene names column to use as an index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – path to data file to inspect</p>
+</dd>
+</dl>
+<p>Returns: a dictionary mapping universal string representations for genes, p-values, logfc data to those in the file
+TODO: update this function to accommodate different file formats (e.g. with/without pvalue, to include extra params in the dict returned</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_in.infer_file_name">
+<code class="sig-prename descclassname">functions.file_in.</code><code class="sig-name descname">infer_file_name</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_in.html#infer_file_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_in.infer_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataframes of imported data will be hashed to the name of the file. All of the files should reside
+in the same folder
+Return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_in.make_unique_index">
+<code class="sig-prename descclassname">functions.file_in.</code><code class="sig-name descname">make_unique_index</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_in.html#make_unique_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_in.make_unique_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for duplicate indices (genes) in df and make unique (add _ and a count)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> – DataFrame to check for duplicated indices</p>
+</dd>
+</dl>
+<p>Returns: df with no duplicated indices</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_in.read_csv_data">
+<code class="sig-prename descclassname">functions.file_in.</code><code class="sig-name descname">read_csv_data</code><span class="sig-paren">(</span><em class="sig-param">path: str</em>, <em class="sig-param">col_names: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_in.html#read_csv_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_in.read_csv_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read csv data to pandas DataFrame</p>
+<p>Read csv formatted expression data into a pandas DataFrame for further manipulation.
+The file should be formatted ‘symbol,logfc,pvalue’ as the first row and corresponding data on following rows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Full path to the target file</p></li>
+<li><p><strong>col_names</strong> (<em>dict</em>) – Actual names of columns from file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dataframe containing data from the file input as ‘path’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_in.strip_data">
+<code class="sig-prename descclassname">functions.file_in.</code><code class="sig-name descname">strip_data</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">data_to_keep: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_in.html#strip_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_in.strip_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strip unwanted data from a DataFrame</p>
+<p>TODO: define use cases for this function and update docs. Duplicate of modify_dataframes.drop_cols</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – </p></li>
+<li><p><strong>data_to_keep</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions.file_out">
+<span id="functions-file-out-module"></span><h2>functions.file_out module<a class="headerlink" href="#module-functions.file_out" title="Permalink to this headline">¶</a></h2>
+<p>Functions for file output.</p>
+<p>This module contains functions for creating new directories, managing temp directories, determining if directories/files
+already exist, and outputting data to files.</p>
+<dl class="function">
+<dt id="functions.file_out.create_new_file_dir">
+<code class="sig-prename descclassname">functions.file_out.</code><code class="sig-name descname">create_new_file_dir</code><span class="sig-paren">(</span><em class="sig-param">root_dir</em>, <em class="sig-param">dirname=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_out.html#create_new_file_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_out.create_new_file_dir" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_dir</strong> – the root directory of</p></li>
+<li><p><strong>dirname</strong> – a name for the folder to create</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_out.dataframe_to_csv">
+<code class="sig-prename descclassname">functions.file_out.</code><code class="sig-name descname">dataframe_to_csv</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">base_path: str</em>, <em class="sig-param">file_name: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_out.html#dataframe_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_out.dataframe_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output a given dataframe to csv
+:param df:
+:param base_path:
+:param file_name:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.file_out.make_original_file_name">
+<code class="sig-prename descclassname">functions.file_out.</code><code class="sig-name descname">make_original_file_name</code><span class="sig-paren">(</span><em class="sig-param">file_out_dir</em>, <em class="sig-param">file_extension: str</em>, <em class="sig-param">root_dir: str = None</em>, <em class="sig-param">file_name: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/file_out.html#make_original_file_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.file_out.make_original_file_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-functions.gene_ontology">
+<span id="functions-gene-ontology-module"></span><h2>functions.gene_ontology module<a class="headerlink" href="#module-functions.gene_ontology" title="Permalink to this headline">¶</a></h2>
+<p>A module containing functions to perform gene ontology analysis (GOA)</p>
+</div>
+<div class="section" id="module-functions.gene_stats">
+<span id="functions-gene-stats-module"></span><h2>functions.gene_stats module<a class="headerlink" href="#module-functions.gene_stats" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="functions.gene_stats.batch_effect_adjust">
+<code class="sig-prename descclassname">functions.gene_stats.</code><code class="sig-name descname">batch_effect_adjust</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/gene_stats.html#batch_effect_adjust"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.gene_stats.batch_effect_adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust for batch effects using R function ComBat from sva package
+Ref: <a class="reference external" href="https://www.youtube.com/watch?v=z3vqrkRGSLI">https://www.youtube.com/watch?v=z3vqrkRGSLI</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.gene_stats.calc_adj_pvalue">
+<code class="sig-prename descclassname">functions.gene_stats.</code><code class="sig-name descname">calc_adj_pvalue</code><span class="sig-paren">(</span><em class="sig-param">dfs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/gene_stats.html#calc_adj_pvalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.gene_stats.calc_adj_pvalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate adjusted p-value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dfs</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.gene_stats.pca_calculation">
+<code class="sig-prename descclassname">functions.gene_stats.</code><code class="sig-name descname">pca_calculation</code><span class="sig-paren">(</span><em class="sig-param">pca_dfs: [&lt;class 'pandas.core.frame.DataFrame'&gt;]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/gene_stats.html#pca_calculation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.gene_stats.pca_calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p>PCA on a DataFrame or on a list of DataFrames.</p>
+<p>Perform PCA on several datasets to determine extent of batch effects or to compare global differences between
+datasets. A DataFrame containing samples to compare or a list of DataFrames (usually to compare between samples for
+batch effect) is passed. Data is standardized using the sklearn.preprocessing.StandardScaler class. (n/2)-1 components
+are calculated from standardized data. DataFrames passed should be formatted with experiments as columns and genes
+as rows.</p>
+<dl class="simple">
+<dt>References: <a class="reference external" href="https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60">https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60</a></dt><dd><p><a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html">https://jakevdp.github.io/PythonDataScienceHandbook/05.09-principal-component-analysis.html</a>
+<a class="reference external" href="http://www.marcottelab.org/users/BCH391L_2015/NBT_primer_PCA.pdf">http://www.marcottelab.org/users/BCH391L_2015/NBT_primer_PCA.pdf</a></p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pca_dfs</strong> – A DataFrame, or list of DataFrames containing gene expression data for PCA comparison.</p>
+</dd>
+</dl>
+<p>Returns: A DataFrame containing the first (n/2)-1 components</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.gene_stats.quantile_norm">
+<code class="sig-prename descclassname">functions.gene_stats.</code><code class="sig-name descname">quantile_norm</code><span class="sig-paren">(</span><em class="sig-param">dfs: [&lt;class 'pandas.core.frame.DataFrame'&gt;]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/gene_stats.html#quantile_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.gene_stats.quantile_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform quantile normalization on expression data.</p>
+<p>Quantile normalize a list of DataFrames using sklearn.Preprocessing.quantile_transform with default n_quantiles=1000.
+The DataFrame(s) passed should contain samples from the same batch. Each DataFrame should be formatted with columns
+as samples and rows as genes.</p>
+<p>TODO: as of now the function assumes the gene order and number are the same across samples. This should change</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dfs</strong> – a DataFrame or list of DataFrames from the same batch</p>
+</dd>
+</dl>
+<p>Returns: a dataframe containing</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions.interface_r">
+<span id="functions-interface-r-module"></span><h2>functions.interface_r module<a class="headerlink" href="#module-functions.interface_r" title="Permalink to this headline">¶</a></h2>
+<p>A module containing functions to utilize R, mainly the ComBat function in the sva package</p>
+<dl class="function">
+<dt id="functions.interface_r.pandas_df_to_exprset">
+<code class="sig-prename descclassname">functions.interface_r.</code><code class="sig-name descname">pandas_df_to_exprset</code><span class="sig-paren">(</span><em class="sig-param">dfs: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/functions/interface_r.html#pandas_df_to_exprset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.interface_r.pandas_df_to_exprset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to convert a pandas DataFrame to a Biobase ExpressionSet</p>
+<p>Takes a list of pandas DataFrames or a single pandas DataFrame and converts it to
+(source: <a class="reference external" href="https://bioconductor.org/packages/release/bioc/html/Biobase.html">https://bioconductor.org/packages/release/bioc/html/Biobase.html</a>)</p>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://rpy2.readthedocs.io/en/version_2.7.x/generated_rst/s4class.html">https://rpy2.readthedocs.io/en/version_2.7.x/generated_rst/s4class.html</a>
+<a class="reference external" href="https://rpy2.readthedocs.io/en/version_2.7.x/_static/notebooks/s4class.html">https://rpy2.readthedocs.io/en/version_2.7.x/_static/notebooks/s4class.html</a>
+<a class="reference external" href="https://rpy2.readthedocs.io/en/version_2.8.x/robjects_oop.html">https://rpy2.readthedocs.io/en/version_2.8.x/robjects_oop.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dfs</strong> – pd.DataFrame(s) to convert to Biobase.ExpressionSet (single dataframe or a list)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a Biobase.ExpressionSet object or a list of Biobase.ExpressionSet objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="functions.interface_r.pyExpressionSet">
+<em class="property">class </em><code class="sig-prename descclassname">functions.interface_r.</code><code class="sig-name descname">pyExpressionSet</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/interface_r.html#pyExpressionSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.interface_r.pyExpressionSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rpy2.robjects.methods.RS4</span></code></p>
+<p>A class explicitly written to</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions.modify_dataframes">
+<span id="functions-modify-dataframes-module"></span><h2>functions.modify_dataframes module<a class="headerlink" href="#module-functions.modify_dataframes" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="functions.modify_dataframes.drop_cols">
+<code class="sig-prename descclassname">functions.modify_dataframes.</code><code class="sig-name descname">drop_cols</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">cols_to_drop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/modify_dataframes.html#drop_cols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.modify_dataframes.drop_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop columns from a list of column names.</p>
+<p>TODO: Duplicate of file_in.strip_data
+:param df:
+:param cols_to_drop:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.modify_dataframes.drop_genes">
+<code class="sig-prename descclassname">functions.modify_dataframes.</code><code class="sig-name descname">drop_genes</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">genes: list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/modify_dataframes.html#drop_genes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.modify_dataframes.drop_genes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drops undesired genes from a DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – </p></li>
+<li><p><strong>genes</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.modify_dataframes.find_common_genes">
+<code class="sig-prename descclassname">functions.modify_dataframes.</code><code class="sig-name descname">find_common_genes</code><span class="sig-paren">(</span><em class="sig-param">frames: [&lt;class 'pandas.core.frame.DataFrame'&gt;]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/modify_dataframes.html#find_common_genes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.modify_dataframes.find_common_genes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a list of DataFrames and returns a DataFrame containing genes common between all DataFrames in the list.</p>
+<p>Filter out uncommon genes from a set of DataFrame. Useful for comparing gene targets from different
+tissues/cell types/diseases where constitutive expression may vary.
+:param frames: a list of Pandas DataFrames containing transcription data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Pandas DataFrame only with genes that overlap between all DataFrames in frames</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.modify_dataframes.remove_duplicate_indicies">
+<code class="sig-prename descclassname">functions.modify_dataframes.</code><code class="sig-name descname">remove_duplicate_indicies</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/modify_dataframes.html#remove_duplicate_indicies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.modify_dataframes.remove_duplicate_indicies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keeps first instance of a gene/index and removes the others</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.modify_dataframes.value_cutoff">
+<code class="sig-prename descclassname">functions.modify_dataframes.</code><code class="sig-name descname">value_cutoff</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">col_name</em>, <em class="sig-param">upper</em>, <em class="sig-param">lower=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/modify_dataframes.html#value_cutoff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.modify_dataframes.value_cutoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes rows containing values above an upper bound or <strong>within</strong> a range (upper, lower)…(NON-INCLUSIVE)</p>
+<p>A df containing data is passed in. The function removes the entire row when a value contained in the specified column
+(col_name) falls within the range. For logFC DEG analysis, upper and lower bounds should be provided. Only a lower
+bound is required for p-values (will remove everything &gt;lower bound).</p>
+<p>This function is intended to reduce memory load, specifically for efficient, non-laggy Plotly plots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>upper</strong> – An upper bound to eliminate genes from the passed df</p></li>
+<li><p><strong>lower</strong> – A lower bound to eliminate genes from the passed df</p></li>
+<li><p><strong>df</strong> – A df containing desired data to modify</p></li>
+<li><p><strong>col_name</strong> – The column containing the data the function will</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: A Dataframe containing only the filtered data</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-functions.parse_geo">
+<span id="functions-parse-geo-module"></span><h2>functions.parse_geo module<a class="headerlink" href="#module-functions.parse_geo" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="functions.parse_geo.geo_to_common">
+<code class="sig-prename descclassname">functions.parse_geo.</code><code class="sig-name descname">geo_to_common</code><span class="sig-paren">(</span><em class="sig-param">geos: list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/parse_geo.html#geo_to_common"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.parse_geo.geo_to_common" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="functions.parse_geo.get_controls">
+<code class="sig-prename descclassname">functions.parse_geo.</code><code class="sig-name descname">get_controls</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/parse_geo.html#get_controls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.parse_geo.get_controls" title="Permalink to this definition">¶</a></dt>
+<dd><p>gsms = [geos[0].gsms.get(i) for i in parse_geo.get_controls(geos[0])] to get a list of gsm objects
+:param data:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.parse_geo.get_geo">
+<code class="sig-prename descclassname">functions.parse_geo.</code><code class="sig-name descname">get_geo</code><span class="sig-paren">(</span><em class="sig-param">geo_accesions: list = None</em>, <em class="sig-param">paths=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/parse_geo.html#get_geo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.parse_geo.get_geo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>geo_accesions</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functions.parse_geo.map_genes_to_expression">
+<code class="sig-prename descclassname">functions.parse_geo.</code><code class="sig-name descname">map_genes_to_expression</code><span class="sig-paren">(</span><em class="sig-param">expr_vals</em>, <em class="sig-param">gene_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/parse_geo.html#map_genes_to_expression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.parse_geo.map_genes_to_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="functions.parse_geo.print_data_processing_method">
+<code class="sig-prename descclassname">functions.parse_geo.</code><code class="sig-name descname">print_data_processing_method</code><span class="sig-paren">(</span><em class="sig-param">gses</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/parse_geo.html#print_data_processing_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#functions.parse_geo.print_data_processing_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-functions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-functions" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Bioinformatics Resources.html" class="btn btn-neutral float-right" title="Bioinformatics Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Visualization.html" class="btn btn-neutral float-left" title="Visualization package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Colton Garelli &amp; Jillian Richmond
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

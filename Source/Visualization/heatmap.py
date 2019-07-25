@@ -1,9 +1,10 @@
 """
-Functions to be used by MVC to create heatmaps of data
+Functions to create heatmaps of gene expression data
 """
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib
 # from scipy.spatial import distance
 # import plotly.graph_objs as go
 # import plotly as py
@@ -11,19 +12,47 @@ import matplotlib.pyplot as plt
 # from scipy.cluster.hierarchy import linkage
 
 
-def sns_clustermap(df: pd.DataFrame, title=None):
+def sns_clustermap(df: pd.DataFrame, title=None, z=False, genes_of_interest: list = None, show_all=True, labels=True) \
+        -> sns.matrix.ClusterGrid:
+    """Create a clustered heatmap of gene expression data.
+
+    Creates a clustered heatmap from a DataFrame of expression data using the seaborn.clustermap function. There is an
+    option to insert a title, use z-scored values, only show certain genes, and to show gene labels. If show all and
+    labels are true and genes_of_interest != None, a map will be generated only showing labels for genes of interest.
+    If show_all is False, a map of only genes_of_interest will be generated.
+
+    Notes:
+        - **Important**: A dataframe passed in MUST contain at least two columns and two rows.
+        - probably something i'll think of later
+        - Seaborn is a thin wrapper around matplotlib.
+
+    Args:
+        df: a DataFrame containing only gene expression data from multiple samples to compare.
+        title: A title for the clustermap
+        z: calculate z-score across genes for all samples in df. Default is False (don't use z-score).
+            if z=True then z_score = 0
+        genes_of_interest: If show_all=True, only labels for genes in genes_of_interest are displayed. If show_all=False
+            a map is generated only using genes in genes_of_interest
+        labels: Show labels (True) or hide (False). Default is True
+        show_all: Generate map of all genes, or only genes in genes_of_interest iff (if and only if)
+        genes_of_interest != None. Otherwise has no effect
+
+    Returns:
+        A clustered heatmap (ClusterGrid object)
+
+    """
+    if df.isnull().values.any().any():
+        df.dropna(axis=0, inplace=True)
+    matplotlib.use('TkAgg')
     if title is None:
         title = "Clustermap"
-    # cmap = sns.diverging_palette(as_cmap=True, h_pos=10, h_neg=240, n=10, center="light", sep=2)
-    cmap = sns.light_palette(color="r", input="rgb", as_cmap=True)
-    genes_of_interest = ['CXCL9', 'CXCL10', 'CXCL11']
-    new_df = pd.DataFrame(index=genes_of_interest)
+    # genes_of_interest = ['CXCL9', 'CXCL10', 'CXCL11']
+    # new_df = pd.DataFrame(index=genes_of_interest)
     # for i in df.columns.to_list():
     #     new_df.merge(df[df[i].isin(genes_of_interest)])
     # TODO: Zscore over rows or cols (probably rows...plot represents # of deviations
     heatmap = sns.clustermap(df, row_cluster=True, col_cluster=True, yticklabels=1, cbar_kws={'label': "log$_2$FC"},
                              z_score=0, cmap='viridis')
-    # y_labels = heatmap.ax_heatmap.yaxis.get_majorticklabels()
     newyticklabels = [l if not i % 2 else ('----------------' + l) for i, l in enumerate([label.get_text() for label in heatmap.ax_heatmap.yaxis.get_ticklabels()])]
     heatmap.ax_heatmap.yaxis.set_ticklabels(newyticklabels)
     plt.setp(heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0, wrap=True)
@@ -35,19 +64,34 @@ def sns_clustermap(df: pd.DataFrame, title=None):
     return heatmap
 
 
-def simple_clustermap(df):
-    heatmap = sns.clustermap(df, row_cluster=False, col_cluster=False   )
-    heatmap.ax_heatmap.yaxis.set_visible(False)
-    heatmap.ax_heatmap.xaxis.set_visible(False)
+def simple_clustermap(df, gene_clust: bool = False, sample_clust: bool = False) -> sns.matrix.ClusterGrid:
+    """Create a heatmap with no labels.
+
+    Generate a 'naked' heatmap with no labels and options for no clustering. Main utility is for modifying in Adobe
+    Illustrator or LibreOffice Draw.
+
+    Args:
+        df: a DataFrame containing gene expression data to plot
+        gene_clust: Boolean whether to perform hierarchical clustering on genes. Default is False (no clustering)
+        sample_clust: Boolean whether to perform hierarchical clustering on samples. Default is False
+
+    Returns:
+        A ClusterGrid object which can be displayed (maplotlib.pyplot.show()) or saved (ClusterGrid.savefig(path))
+
+    """
+    hm = sns.clustermap(df, row_cluster=False, col_cluster=False)
+    hm.ax_heatmap.yaxis.set_visible(False)
+    hm.ax_heatmap.xaxis.set_visible(False)
     # newyticklabels = [l if not i % 2 else ('----------------' + l) for i, l in enumerate([label.get_text() for label in heatmap.ax_heatmap.yaxis.get_ticklabels()])]
     # heatmap.ax_heatmap.yaxis.set_ticklabels(newyticklabels)
     # plt.setp(heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0, wrap=True)
-    heatmap.savefig('simple_testing.png')
+    return hm
 
 
 def sns_heatmap(df:pd.DataFrame):
-    """
+    """Creates a regular old boring heatmap. This is basically the same as the simple_clustermap function
 
+    TODO: determine whether this function is worth updating (i.e. labels, title, etc.) or whether it should be archived.
     Args:
         df:
 
@@ -58,22 +102,4 @@ def sns_heatmap(df:pd.DataFrame):
     heatmap = sns.heatmap(df, robust=True)
     plt.show()
     return heatmap
-    # heatmap.savefig('testingheatmap.png')
-
-
-# def plotly_heatmap(df: pd.DataFrame):
-#
-#     cols = [col for col in df if col not in ['symbol', 'uniprot_id', 'avg']]
-#     short_cols = [col[0:20] for col in cols]
-#     print(short_cols)
-#     short_cols = [short_cols[i] + str(i) for i in range(1, len(short_cols), 1)]
-#     print(short_cols)
-#     data_dist = distance.pdist(df[cols].values.transpose())
-#
-#     data = py.graph_objs.Heatmap(z=distance.squareform(data_dist), colorscale='YlGnBu', x=short_cols, y=short_cols)
-#     layout = go.Layout(title='Transcription profiling of human brain samples', autosize=False,
-#                        margin=go.layout.Margin(l=200, b=200, pad=4), xaxis=go.layout.XAxis(showgrid=False, dtick=1),
-#                        yaxis=go.layout.YAxis(showgrid=False, dtick=1))
-#     fig = go.Figure(data=data, layout=layout)
-#     py.plotly.plot(fig, width=900, height=900)
 

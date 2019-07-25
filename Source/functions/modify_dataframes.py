@@ -21,6 +21,7 @@ def value_cutoff(df: pd.DataFrame, col_name, upper, lower=None):
         col_name: The column containing the data the function will
 
     Returns: A Dataframe containing only the filtered data
+
     """
     if lower is None:
         # everything less than the upperbound
@@ -42,6 +43,7 @@ def find_common_genes(frames: [pd.DataFrame]):
 
     Returns:
         A Pandas DataFrame only with genes that overlap between all DataFrames in frames
+
     """
     # Drop values that don't have shared genes (symbol column)
     common = pd.DataFrame()

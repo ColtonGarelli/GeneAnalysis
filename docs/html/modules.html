@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Source &mdash; CLE 0.0.1 documentation</title>
+  <title>Source &mdash; Gene Expression Analysis 0.0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MVC package" href="MVC.html" />
+    <link rel="next" title="Visualization package" href="Visualization.html" />
     <link rel="prev" title="Welcome to Gene Analysis Project’s documentation!" href="index.html" /> 
 </head>
 
@@ -50,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> CLE
+            <a href="index.html" class="icon icon-home"> Gene Expression Analysis
           
 
           
@@ -83,15 +83,12 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Source</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html">MVC package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html">Visualization package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_errors.html">custom_errors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_in.html">file_in module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gene_stats.html">gene_stats module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">functions package</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Bioinformatics Resources.html">Bioinformatics Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Gene Analysis with Python.html">Gene Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Data Analysis with Python.html">Data Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Pytest Resources.html">Pytest Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Python Resources.html">Python Resources</a></li>
@@ -109,7 +106,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">CLE</a>
+          <a href="index.html">Gene Expression Analysis</a>
         
       </nav>
 
@@ -163,25 +160,28 @@
 <h1>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="MVC.html">MVC package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html#module-MVC.Controller">MVC.Controller module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html#module-MVC.Model">MVC.Model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html#module-MVC.View">MVC.View module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html#module-MVC">Module contents</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="Visualization.html">Visualization package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#module-Visualization.heatmap">Visualization.heatmap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#module-Visualization.stat_plots">Visualization.stat_plots module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#module-Visualization.violin">Visualization.violin module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#module-Visualization.volcano">Visualization.volcano module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#module-Visualization">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="custom_errors.html">custom_errors module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_in.html">file_in module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gene_stats.html">gene_stats module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">functions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.differential_expression">functions.differential_expression module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.file_in">functions.file_in module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.file_out">functions.file_out module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.gene_ontology">functions.gene_ontology module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.gene_stats">functions.gene_stats module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.interface_r">functions.interface_r module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.modify_dataframes">functions.modify_dataframes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions.parse_geo">functions.parse_geo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#module-functions">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -194,7 +194,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="MVC.html" class="btn btn-neutral float-right" title="MVC package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Visualization.html" class="btn btn-neutral float-right" title="Visualization package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Gene Analysis Project’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

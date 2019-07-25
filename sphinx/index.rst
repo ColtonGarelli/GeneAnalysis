@@ -19,6 +19,9 @@ Welcome to Gene Analysis Project's documentation!
    Python Resources
 
 
+:Author: Colton Garelli
+:Version: 0.0.1 dev
+
 
 Indices and tables
 ==================

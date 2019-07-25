@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Visualization.heatmap &mdash; CLE 0.0.1 documentation</title>
+  <title>Visualization.heatmap &mdash; Gene Expression Analysis 0.0.1 documentation</title>
   
 
   
@@ -48,7 +48,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> CLE
+            <a href="../../index.html" class="icon icon-home"> Gene Expression Analysis
           
 
           
@@ -82,6 +82,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Bioinformatics Resources.html">Bioinformatics Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Gene Analysis with Python.html">Gene Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Data Analysis with Python.html">Data Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Pytest Resources.html">Pytest Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html">Python Resources</a></li>
@@ -99,7 +100,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">CLE</a>
+          <a href="../../index.html">Gene Expression Analysis</a>
         
       </nav>
 
@@ -149,33 +150,109 @@
             
   <h1>Source code for Visualization.heatmap</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Functions to be used by MVC to create heatmaps of data</span>
+<span class="sd">Functions to create heatmaps of gene expression data</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="c1"># from scipy.spatial import distance</span>
+<span class="c1"># import plotly.graph_objs as go</span>
+<span class="c1"># import plotly as py</span>
+<span class="c1"># import plotly.offline as offline</span>
+<span class="c1"># from scipy.cluster.hierarchy import linkage</span>
 
 
-<div class="viewcode-block" id="sns_heatmap"><a class="viewcode-back" href="../../Visualization.html#Visualization.heatmap.sns_heatmap">[docs]</a><span class="k">def</span> <span class="nf">sns_heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">clustermap</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+<div class="viewcode-block" id="sns_clustermap"><a class="viewcode-back" href="../../Visualization.html#Visualization.heatmap.sns_clustermap">[docs]</a><span class="k">def</span> <span class="nf">sns_clustermap</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">genes_of_interest</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> \
+        <span class="o">-&gt;</span> <span class="n">sns</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">ClusterGrid</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a clustered heatmap of gene expression data.</span>
 
-<div class="viewcode-block" id="make_heatmap"><a class="viewcode-back" href="../../Visualization.html#Visualization.heatmap.make_heatmap">[docs]</a><span class="k">def</span> <span class="nf">make_heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="sd">    Creates a clustered heatmap from a DataFrame of expression data using the seaborn.clustermap function. There is an</span>
+<span class="sd">    option to insert a title, use z-scored values, only show certain genes, and to show gene labels. If show all and</span>
+<span class="sd">    labels are true and genes_of_interest != None, a map will be generated only showing labels for genes of interest.</span>
+<span class="sd">    If show_all is False, a map of only genes_of_interest will be generated.</span>
 
-    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;uniprot_id&#39;</span><span class="p">,</span> <span class="s1">&#39;avg&#39;</span><span class="p">]]</span>
-    <span class="n">short_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">short_cols</span><span class="p">)</span>
-    <span class="n">short_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">short_cols</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">short_cols</span><span class="p">),</span> <span class="mi">1</span><span class="p">)]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">short_cols</span><span class="p">)</span>
-    <span class="n">data_dist</span> <span class="o">=</span> <span class="n">distance</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+<span class="sd">    Notes:</span>
+<span class="sd">        - **Important**: A dataframe passed in MUST contain at least two columns and two rows.</span>
+<span class="sd">        - probably something i&#39;ll think of later</span>
+<span class="sd">        - Seaborn is a thin wrapper around matplotlib.</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">graph_objs</span><span class="o">.</span><span class="n">Heatmap</span><span class="p">(</span><span class="n">z</span><span class="o">=</span><span class="n">distance</span><span class="o">.</span><span class="n">squareform</span><span class="p">(</span><span class="n">data_dist</span><span class="p">),</span> <span class="n">colorscale</span><span class="o">=</span><span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">short_cols</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">short_cols</span><span class="p">)</span>
-    <span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Transcription profiling of human brain samples&#39;</span><span class="p">,</span> <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                       <span class="n">margin</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">Margin</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">xaxis</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">XAxis</span><span class="p">(</span><span class="n">showgrid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtick</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                       <span class="n">yaxis</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">YAxis</span><span class="p">(</span><span class="n">showgrid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtick</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
-    <span class="n">py</span><span class="o">.</span><span class="n">plotly</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">900</span><span class="p">)</span></div>
+<span class="sd">    Args:</span>
+<span class="sd">        df: a DataFrame containing only gene expression data from multiple samples to compare.</span>
+<span class="sd">        title: A title for the clustermap</span>
+<span class="sd">        z: calculate z-score across genes for all samples in df. Default is False (don&#39;t use z-score).</span>
+<span class="sd">            if z=True then z_score = 0</span>
+<span class="sd">        genes_of_interest: If show_all=True, only labels for genes in genes_of_interest are displayed. If show_all=False</span>
+<span class="sd">            a map is generated only using genes in genes_of_interest</span>
+<span class="sd">        labels: Show labels (True) or hide (False). Default is True</span>
+<span class="sd">        show_all: Generate map of all genes, or only genes in genes_of_interest iff (if and only if)</span>
+<span class="sd">        genes_of_interest != None. Otherwise has no effect</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A clustered heatmap (ClusterGrid object)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;TkAgg&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Clustermap&quot;</span>
+    <span class="c1"># genes_of_interest = [&#39;CXCL9&#39;, &#39;CXCL10&#39;, &#39;CXCL11&#39;]</span>
+    <span class="c1"># new_df = pd.DataFrame(index=genes_of_interest)</span>
+    <span class="c1"># for i in df.columns.to_list():</span>
+    <span class="c1">#     new_df.merge(df[df[i].isin(genes_of_interest)])</span>
+    <span class="c1"># TODO: Zscore over rows or cols (probably rows...plot represents # of deviations</span>
+    <span class="n">heatmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">clustermap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">row_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">col_cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s2">&quot;log$_2$FC&quot;</span><span class="p">},</span>
+                             <span class="n">z_score</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+    <span class="n">newyticklabels</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">else</span> <span class="p">(</span><span class="s1">&#39;----------------&#39;</span> <span class="o">+</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">label</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">heatmap</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">get_ticklabels</span><span class="p">()])]</span>
+    <span class="n">heatmap</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">(</span><span class="n">newyticklabels</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">heatmap</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">get_majorticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">heatmap</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">heatmap</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+        <span class="n">heatmap</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">heatmap</span></div>
+
+
+<div class="viewcode-block" id="simple_clustermap"><a class="viewcode-back" href="../../Visualization.html#Visualization.heatmap.simple_clustermap">[docs]</a><span class="k">def</span> <span class="nf">simple_clustermap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">gene_clust</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sample_clust</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sns</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">ClusterGrid</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a heatmap with no labels.</span>
+
+<span class="sd">    Generate a &#39;naked&#39; heatmap with no labels and options for no clustering. Main utility is for modifying in Adobe</span>
+<span class="sd">    Illustrator or LibreOffice Draw.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: a DataFrame containing gene expression data to plot</span>
+<span class="sd">        gene_clust: Boolean whether to perform hierarchical clustering on genes. Default is False (no clustering)</span>
+<span class="sd">        sample_clust: Boolean whether to perform hierarchical clustering on samples. Default is False</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A ClusterGrid object which can be displayed (maplotlib.pyplot.show()) or saved (ClusterGrid.savefig(path))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hm</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">clustermap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">row_cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">col_cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">hm</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">hm</span><span class="o">.</span><span class="n">ax_heatmap</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># newyticklabels = [l if not i % 2 else (&#39;----------------&#39; + l) for i, l in enumerate([label.get_text() for label in heatmap.ax_heatmap.yaxis.get_ticklabels()])]</span>
+    <span class="c1"># heatmap.ax_heatmap.yaxis.set_ticklabels(newyticklabels)</span>
+    <span class="c1"># plt.setp(heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0, wrap=True)</span>
+    <span class="k">return</span> <span class="n">hm</span></div>
+
+
+<div class="viewcode-block" id="sns_heatmap"><a class="viewcode-back" href="../../Visualization.html#Visualization.heatmap.sns_heatmap">[docs]</a><span class="k">def</span> <span class="nf">sns_heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a regular old boring heatmap. This is basically the same as the simple_clustermap function</span>
+
+<span class="sd">    TODO: determine whether this function is worth updating (i.e. labels, title, etc.) or whether it should be archived.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        df:</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+    <span class="n">heatmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">heatmap</span></div>
 
 </pre></div>
 

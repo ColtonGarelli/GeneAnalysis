@@ -6,16 +6,22 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from functions.differential_expression import log_transform
-
 # py.tools.set_credentials_file(username='coltongarelli', api_key='xRJ5tPIjCkx8pz17KWzl')
 
 
 
 def plotly_volcano(log_col, data=None, pvalue="adj_pvalue"):
+    """
+
+    Args:
+        log_col:
+        data:
+        pvalue:
+
+    Returns:
+
+    """
     logFC = "logFC"
-    if data is None:
-        data = pd.read_csv("https://reneshbedre.github.IO/myfiles/volcano/SaLR_DEGseq.txt", sep="\t")
-        logFC = "log2FC"
     # Only include data with large differential expression and good p values
     data_to_plot = data.loc[(data[pvalue] < 0.01)]
     data_to_plot.append(data.loc[-2 < (data[logFC] < 2)])

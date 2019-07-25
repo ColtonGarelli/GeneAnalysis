@@ -1,6 +1,5 @@
-****************
 Python Resources
-****************
+================
 
 Some links to relevant Python resources
 

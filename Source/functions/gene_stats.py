@@ -66,12 +66,15 @@ def quantile_norm(dfs: [pd.DataFrame] or pd.DataFrame):
 
     """
     transformed = list()
-    vals = [list(i.columns.values) for i in dfs]
-    index = dfs[0].index.tolist()
+
     if isinstance(dfs, list):
+        vals = [list(i.columns.values) for i in dfs]
+        index = dfs[0].index.tolist()
         for i in range(len(dfs)):
             transformed.append(pd.DataFrame(quantile_transform(dfs[i], axis=0), columns=vals[i], index=index))
     else:
+        vals = dfs.columns.to_list()
+        index = dfs.index.to_list()
         transformed = pd.DataFrame(quantile_transform(dfs, axis=0), columns=vals, index=index)
     return transformed
 

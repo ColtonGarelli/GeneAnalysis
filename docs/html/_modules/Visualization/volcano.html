@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Visualization.volcano &mdash; CLE 0.0.1 documentation</title>
+  <title>Visualization.volcano &mdash; Gene Expression Analysis 0.0.1 documentation</title>
   
 
   
@@ -48,7 +48,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> CLE
+            <a href="../../index.html" class="icon icon-home"> Gene Expression Analysis
           
 
           
@@ -82,6 +82,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Source</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Bioinformatics Resources.html">Bioinformatics Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Gene Analysis with Python.html">Gene Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Data Analysis with Python.html">Data Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Pytest Resources.html">Pytest Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html">Python Resources</a></li>
@@ -99,7 +100,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">CLE</a>
+          <a href="../../index.html">Gene Expression Analysis</a>
         
       </nav>
 
@@ -148,24 +149,33 @@
            <div itemprop="articleBody">
             
   <h1>Source code for Visualization.volcano</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">plotly</span> <span class="k">as</span> <span class="nn">py</span>
+<span></span><span class="kn">import</span> <span class="nn">plotly.offline</span> <span class="k">as</span> <span class="nn">py</span>
+<span class="c1"># import plotly.plotly as py</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">py</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">set_credentials_file</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;coltongarelli&#39;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s1">&#39;OeZDThyslDgaGROfcb2m&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">functions.differential_expression</span> <span class="k">import</span> <span class="n">log_transform</span>
+<span class="c1"># py.tools.set_credentials_file(username=&#39;coltongarelli&#39;, api_key=&#39;xRJ5tPIjCkx8pz17KWzl&#39;)</span>
 
 
 
-<div class="viewcode-block" id="plotly_volcano"><a class="viewcode-back" href="../../Visualization.html#Visualization.volcano.plotly_volcano">[docs]</a><span class="k">def</span> <span class="nf">plotly_volcano</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="s2">&quot;adj_pvalue&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="plotly_volcano"><a class="viewcode-back" href="../../Visualization.html#Visualization.volcano.plotly_volcano">[docs]</a><span class="k">def</span> <span class="nf">plotly_volcano</span><span class="p">(</span><span class="n">log_col</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="s2">&quot;adj_pvalue&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        log_col:</span>
+<span class="sd">        data:</span>
+<span class="sd">        pvalue:</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logFC</span> <span class="o">=</span> <span class="s2">&quot;logFC&quot;</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://reneshbedre.github.IO/myfiles/volcano/SaLR_DEGseq.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">logFC</span> <span class="o">=</span> <span class="s2">&quot;log2FC&quot;</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>  <span class="c1"># first five lines</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>  <span class="c1"># table information including dimensions</span>
-
     <span class="c1"># Only include data with large differential expression and good p values</span>
     <span class="n">data_to_plot</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="n">pvalue</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)]</span>
     <span class="n">data_to_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">logFC</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)])</span>
@@ -176,7 +186,7 @@
     <span class="n">low_p</span> <span class="o">=</span> <span class="n">data_to_plot</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
     <span class="n">data_to_plot</span><span class="p">[</span><span class="n">pvalue</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">low_p</span><span class="p">)</span>
     <span class="c1"># y-value is -log10 normalized pvalue</span>
-    <span class="n">data_to_plot</span><span class="p">[</span><span class="s1">&#39;logpv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">data_to_plot</span><span class="p">[</span><span class="n">pvalue</span><span class="p">])</span>
+    <span class="n">data_to_plot</span><span class="p">[</span><span class="n">log_col</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">data_to_plot</span><span class="p">[</span><span class="n">pvalue</span><span class="p">])</span>
     <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># Setting colors for plot.</span>
@@ -188,7 +198,7 @@
         <span class="c1"># The hover text goes text=...</span>
         <span class="n">trace0</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
             <span class="n">x</span><span class="o">=</span><span class="n">data_to_plot</span><span class="p">[</span><span class="n">logFC</span><span class="p">],</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">data_to_plot</span><span class="p">[</span><span class="s1">&#39;logpv&#39;</span><span class="p">],</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">data_to_plot</span><span class="p">[</span><span class="n">log_col</span><span class="p">],</span>
             <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;markers&#39;</span><span class="p">,</span>
             <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">text</span><span class="o">=</span><span class="n">data_to_plot</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
         <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace0</span><span class="p">)</span>
@@ -213,48 +223,79 @@
     <span class="n">py</span><span class="o">.</span><span class="n">plotly</span><span class="o">.</span><span class="n">plotly</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
 
 
-
-<div class="viewcode-block" id="seaborn_volcano_plot"><a class="viewcode-back" href="../../Visualization.html#Visualization.volcano.seaborn_volcano_plot">[docs]</a><span class="k">def</span> <span class="nf">seaborn_volcano_plot</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="seaborn_volcano_plot"><a class="viewcode-back" href="../../Visualization.html#Visualization.volcano.seaborn_volcano_plot">[docs]</a><span class="k">def</span> <span class="nf">seaborn_volcano_plot</span><span class="p">(</span><span class="n">colnames</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    From: https://reneshbedre.github.IO/blog/volcano.html</span>
 <span class="sd">    :param d:</span>
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logFC</span> <span class="o">=</span> <span class="s2">&quot;logFC&quot;</span>
-    <span class="c1"># for reference dataset</span>
-    <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># load data file</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://reneshbedre.github.IO/myfiles/volcano/SaLR_DEGseq.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">logFC</span> <span class="o">=</span> <span class="s2">&quot;log2FC&quot;</span>
-
-    <span class="c1"># to see first few lines of table and get table dimensions</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>  <span class="c1"># first five lines</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>  <span class="c1"># table information including dimensions</span>
-
-    <span class="c1"># Only include data with large differential expression and good p values</span>
-    <span class="c1"># Assign colors to up and down regulated genes</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">d</span><span class="p">[</span><span class="n">logFC</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;p-value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">),</span> <span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>  <span class="c1"># upregulated</span>
-    <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">d</span><span class="p">[</span><span class="n">logFC</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;p-value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">),</span> <span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>  <span class="c1"># downregulated</span>
-    <span class="n">d</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="c1"># only take values that had 10 or more expression count</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;value1&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;value2&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)]</span>
-
     <span class="c1"># y-value is -log10 normalized pvalue</span>
-    <span class="c1"># you can use d.nsmallest(2, &#39;p-value&#39;)</span>
-    <span class="n">low_p</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;p-value&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;p-value&#39;</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">low_p</span>
-    <span class="n">d</span><span class="p">[</span><span class="s1">&#39;logpv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;p-value&#39;</span><span class="p">]))</span>
-    <span class="c1"># change d[&#39;logpv&#39;] to d[&#39;p-value&#39;]</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="s2">&quot;log2FC&quot;</span><span class="p">,</span> <span class="s2">&quot;logpv&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;log2FC&#39;</span><span class="p">)</span>
-    <span class="c1"># plt.scatter(d[&#39;log2FC&#39;], d[&#39;logpv&#39;], c=d[&#39;color&#39;])</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">log_p</span> <span class="o">=</span> <span class="n">log_transform</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;pval&#39;</span><span class="p">],</span> <span class="n">logbase</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># for i1 in d.index:</span>
+    <span class="c1">#     if &quot;CXCL&quot; in str(i1):</span>
+    <span class="c1">#         print(i1)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;darkgrid&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="c1"># Create a colorbar for the volcano plot</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="n">h_neg</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">h_pos</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mappable</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+    <span class="n">mappable</span><span class="o">.</span><span class="n">set_array</span><span class="p">([])</span>
+    <span class="c1"># color dots on a green spectrum</span>
+    <span class="k">if</span> <span class="s1">&#39;DEG&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+        <span class="n">scat</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">log_p</span><span class="p">,</span>
+                               <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]],</span>
+                               <span class="n">palette</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># non_deg = d[~d.DEG]</span>
+        <span class="c1"># greys = non_deg.index.values</span>
+        <span class="c1"># nans = np.argwhere(np.isnan(greys))</span>
+        <span class="c1"># greys = greys.nan_to_num(range(len(nans)), copy=True)</span>
+        <span class="c1"># x = d.loc[greys]</span>
+        <span class="c1"># plt.scatter(d[greys][colnames[&quot;logfc&quot;]], y=d[greys][colnames[&quot;pvalue&quot;]], color=&#39;grey&#39;)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scat</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">log_p</span><span class="p">,</span>
+                               <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]],</span>
+                               <span class="n">palette</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">scat</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">)</span>
+    <span class="c1"># plt.colorbar(scat)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Log$_2$FC&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Log$_</span><span class="si">{10}</span><span class="s2">$ Adjusted P-Value&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plot of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="n">log_p</span><span class="p">],</span> <span class="s1">&#39;val&#39;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">log_p</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">3</span> <span class="ow">or</span> <span class="n">d</span><span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="s1">&#39;logfc&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">scat</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="o">.</span><span class="mi">15</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">scat</span></div>
+
+
+<div class="viewcode-block" id="display_vals"><a class="viewcode-back" href="../../Visualization.html#Visualization.volcano.display_vals">[docs]</a><span class="k">def</span> <span class="nf">display_vals</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">genes_to_display</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">genes_to_display</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span></div>
+
+
+
+
+
+
+
+
+
+
+
+    <span class="c1"># plt.savefig(&#39;testing_volcano.png&#39;)</span>
+    <span class="c1"># Assign colors to up and down regulated genes</span>
+    <span class="c1"># d.loc[(d[logFC] &gt;= 3) &amp; (d[colnames[&#39;pval&#39;]] &lt; 0.05), &#39;color&#39;] = &quot;green&quot;  # upregulated</span>
+    <span class="c1"># d.loc[(d[logFC] &lt;= -3) &amp; (d[colnames[&#39;pval&#39;]] &lt; 0.05), &#39;color&#39;] = &quot;red&quot;  # downregulated</span>
+    <span class="c1"># d[&#39;color&#39;].fillna(&#39;grey&#39;, inplace=True)</span>
+
+    <span class="c1"># plt.scatter(d[&#39;log2FC&#39;], d[log_col&#39;], c=d[&#39;color&#39;])</span>
     <span class="c1"># plt.xlabel(&#39;log2 Fold Change&#39;, fontsize=15, fontname=&quot;sans-serif&quot;, fontweight=&quot;bold&quot;)</span>
     <span class="c1"># plt.ylabel(&#39;-log10(P-value)&#39;, fontsize=15, fontname=&quot;sans-serif&quot;, fontweight=&quot;bold&quot;)</span>
     <span class="c1"># plt.xticks(fontsize=12, fontname=&quot;sans-serif&quot;)</span>
     <span class="c1"># plt.yticks(fontsize=12, fontname=&quot;sans-serif&quot;)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+    <span class="c1"># d = d.loc[(d[&#39;value1&#39;] &gt;= 10) &amp; (d[&#39;value2&#39;] &gt;= 10)]</span>
 
 
 </pre></div>
