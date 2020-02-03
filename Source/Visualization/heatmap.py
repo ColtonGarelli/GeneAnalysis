@@ -5,6 +5,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.colors as colors
+import numpy as np
 # from scipy.spatial import distance
 # import plotly.graph_objs as go
 # import plotly as py
@@ -51,8 +53,13 @@ def sns_clustermap(df: pd.DataFrame, title=None, z=False, genes_of_interest: lis
     # for i in df.columns.to_list():
     #     new_df.merge(df[df[i].isin(genes_of_interest)])
     # TODO: Zscore over rows or cols (probably rows...plot represents # of deviations
-    heatmap = sns.clustermap(df, row_cluster=True, col_cluster=True, yticklabels=1, cbar_kws={'label': "log$_2$FC"},
-                             z_score=0, cmap='viridis')
+    if genes_of_interest is None:
+        heatmap = sns.clustermap(df, row_cluster=True, col_cluster=True, yticklabels=1, cbar_kws={'label': "log$_2$FC"},
+                                  cmap='viridis', center=0, z_score=0)
+    else:
+        heatmap = sns.clustermap(df.loc[genes_of_interest,:], row_cluster=True, col_cluster=True, yticklabels=1, cbar_kws={'label': "log$_2$FC"},
+                                 cmap='viridis', center=0, z_score=0)
+
     newyticklabels = [l if not i % 2 else ('----------------' + l) for i, l in enumerate([label.get_text() for label in heatmap.ax_heatmap.yaxis.get_ticklabels()])]
     heatmap.ax_heatmap.yaxis.set_ticklabels(newyticklabels)
     plt.setp(heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0, wrap=True)
@@ -79,7 +86,7 @@ def simple_clustermap(df, gene_clust: bool = False, sample_clust: bool = False) 
         A ClusterGrid object which can be displayed (maplotlib.pyplot.show()) or saved (ClusterGrid.savefig(path))
 
     """
-    hm = sns.clustermap(df, row_cluster=False, col_cluster=False)
+    hm = sns.clustermap(df, row_cluster=gene_clust, col_cluster=sample_clust, z_score=0, cmap='viridis')
     hm.ax_heatmap.yaxis.set_visible(False)
     hm.ax_heatmap.xaxis.set_visible(False)
     # newyticklabels = [l if not i % 2 else ('----------------' + l) for i, l in enumerate([label.get_text() for label in heatmap.ax_heatmap.yaxis.get_ticklabels()])]
@@ -88,7 +95,7 @@ def simple_clustermap(df, gene_clust: bool = False, sample_clust: bool = False) 
     return hm
 
 
-def sns_heatmap(df:pd.DataFrame):
+def sns_heatmap(df:pd.DataFrame, colormap=None, title="Title"):
     """Creates a regular old boring heatmap. This is basically the same as the simple_clustermap function
 
     TODO: determine whether this function is worth updating (i.e. labels, title, etc.) or whether it should be archived.
@@ -98,8 +105,24 @@ def sns_heatmap(df:pd.DataFrame):
     Returns:
 
     """
+    if colormap is None:
+        colormap=plt.cm.get_cmap('viridis')
     plt.figure(figsize=(20,20))
-    heatmap = sns.heatmap(df, robust=True)
-    plt.show()
+    ax = plt.axes()
+    heatmap = sns.heatmap(df, robust=True, cmap=colormap, annot=True, square=True, ax=ax)
+    ax.set_title(label=title)
     return heatmap
+
+
+class MidpointNormalize(colors.Normalize):
+    def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):
+        self.midpoint = midpoint
+        colors.Normalize.__init__(self, vmin, vmax, clip)
+
+    def __call__(self, value, clip=None):
+        # I'm ignoring masked values and all kinds of edge cases to make a
+        # simple example...
+        x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
+        return np.ma.masked_array(np.interp(value, x, y))
+
 

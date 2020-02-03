@@ -86,6 +86,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../Data Analysis with Python.html">Data Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Pytest Resources.html">Pytest Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html">Python Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#statements">Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#data-types">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#uniprotio">UniprotIO:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#seqrecord-class">SeqRecord Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#biosql">BioSQL:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#other-imported-modules">Other Imported Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Python Resources.html#misc">Misc</a></li>
 </ul>
 
             
@@ -217,12 +224,15 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">transformed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">]</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">]</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfs</span><span class="p">)):</span>
             <span class="n">transformed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">quantile_transform</span><span class="p">(</span><span class="n">dfs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">dfs</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">dfs</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
         <span class="n">transformed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">quantile_transform</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vals</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">transformed</span></div>
 

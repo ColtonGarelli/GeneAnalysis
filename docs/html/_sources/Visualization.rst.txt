@@ -1,11 +1,11 @@
+=====================
 Visualization package
 =====================
 
-Submodules
-----------
-
+----------------------------
 Visualization.heatmap module
 ----------------------------
+The heatmap module contains functions to produce clustermaps or heatmaps from gene expression data.
 
 .. automodule:: Visualization.heatmap
    :members:
@@ -14,6 +14,8 @@ Visualization.heatmap module
 
 Visualization.stat\_plots module
 --------------------------------
+The stat_plots module contains functions to plot density maps, PCA, and potentially other statistical representations
+of data including ML (tSNE, UMAP,
 
 .. automodule:: Visualization.stat_plots
    :members:

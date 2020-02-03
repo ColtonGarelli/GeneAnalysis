@@ -5,9 +5,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from functions.differential_expression import log_transform
+from data_processing.differential_expression import log_transform
+import matplotlib as mpl
+import matplotlib.colors as colors
+mpl.rcParams['figure.dpi'] = 350
 # py.tools.set_credentials_file(username='coltongarelli', api_key='xRJ5tPIjCkx8pz17KWzl')
-
 
 
 def plotly_volcano(log_col, data=None, pvalue="adj_pvalue"):
@@ -69,11 +71,15 @@ def plotly_volcano(log_col, data=None, pvalue="adj_pvalue"):
     py.plotly.plotly.plot(fig)
 
 
-def seaborn_volcano_plot(colnames, d=None, title=None):
+def sns_volcano(colnames, d=None, title=None, genes: list=None):
+    # TODO: Adapt to OOP. Look up how mpl does oop vs functional.
+    # TODO: split into multiple functions that sns_volcano uses
     """
-    From: https://reneshbedre.github.IO/blog/volcano.html
+    Adapted from example at: https://reneshbedre.github.IO/blog/volcano.html
     :param d:
     :return:
+
+    # need to make object oriented but maintain axes
     """
     # y-value is -log10 normalized pvalue
     d, log_p = log_transform(d, colnames['pval'], logbase=10)
@@ -82,12 +88,17 @@ def seaborn_volcano_plot(colnames, d=None, title=None):
     #     if "CXCL" in str(i1):
     #         print(i1)
     sns.set_style('darkgrid')
-    plt.xlim((-6, 6))
+    big = d[colnames['logfc']].nlargest(1).to_numpy()
+    small = d[colnames['logfc']].nsmallest(1).to_numpy()
+    xlim = big[0] if big[0] > np.fabs(small[0]) else np.fabs(small[0])
+    plt.xlim = (-xlim, xlim)
+    # plt.pcolor(X=d[colnames['logfc']], Y=d[colnames['pval']])
     # Create a colorbar for the volcano plot
     norm = plt.Normalize(d[colnames['logfc']].max(), d[colnames['logfc']].min())
+    midnorm = MidpointNormalize(midpoint=0, vmin=small, vmax=big)
     cmap = sns.diverging_palette(h_neg=200, h_pos=0, as_cmap=True)
-    mappable = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
-    mappable.set_array([])
+    mappable = plt.cm.ScalarMappable(cmap=cmap, norm=midnorm)
+    # mappable.set_array([])
     # color dots on a green spectrum
     if 'DEG' in d.columns:
 
@@ -101,18 +112,42 @@ def seaborn_volcano_plot(colnames, d=None, title=None):
         # x = d.loc[greys]
         # plt.scatter(d[greys][colnames["logfc"]], y=d[greys][colnames["pvalue"]], color='grey')
     else:
+
+
         scat = sns.scatterplot(x=colnames['logfc'], y=log_p,
                                data=d, hue=d[colnames['logfc']],
-                               palette=cmap, legend=False)
+                               palette=cmap, hue_norm=midnorm, legend=False)
     scat.figure.colorbar(mappable)
-    # plt.colorbar(scat)
-    plt.xlabel('Log$_2$FC')
-    plt.ylabel("Log$_{10}$ Adjusted P-Value")
-    plt.title("Plot of {}".format(title))
+    scat.set_xlabel('Log$_2$FC')
+    scat.set_ylabel("Log$_{10}$ Adjusted P-Value")
+    scat.figure.suptitle("Plot of {}".format(title))
     a = pd.concat({'x': d[colnames['logfc']], 'y': d[log_p], 'val': d.index.to_series()}, axis=1)
-    for i, point in a.iterrows():
-        if d[log_p].loc[i] > 2 and (d[colnames['logfc']].loc[i] < -3 or d[colnames['logfc']].loc[i] > 3):
-            scat.text(point['x'] + .15, point['y'], str(point['val']), size=5)
+
+    if genes is None:
+        for i, point in a.iterrows():
+            try:
+                if d.loc[i, log_p] > 2.0 and (d.loc[i, colnames['logfc']] < -1 or d.loc[i, colnames['logfc']] > 2):
+                    scat.text(point['x'] + .15, point['y'], str(point['val']), size=5)
+
+            # This will turn everything below significance gray
+            #     else:
+            #         scat.scatter(point['x'], point['y'], color='silver')
+            except Exception:
+                pass
+    elif genes is not None:
+        for i, point in a.iterrows():
+            try:
+                if d.loc[i, log_p] > 2.0 and (d.loc[i, colnames['logfc']] < -1 or d.loc[i, colnames['logfc']] > 1) and i in genes:
+
+                    scat.text(point['x'] + .15, point['y'], str(point['val']), size=5)
+
+                elif i not in genes:
+                    pass
+            except Exception:
+                print(d.loc[i, log_p])
+                # This will turn everything below significance gray
+                # else:
+                #     scat.scatter(point['x'], point['y'], color='silver')
     return scat
 
 
@@ -120,27 +155,20 @@ def display_vals(df, genes_to_display):
     return df.join(genes_to_display, how='inner')
 
 
+class MidpointNormalize(colors.Normalize):
+    """
+    Copied from: http://chris35wills.github.io/matplotlib_diverging_colorbar/
+    Normalise the colorbar so that diverging bars work there way either side from a prescribed midpoint value)
 
+    e.g. im=ax1.imshow(array, norm=MidpointNormalize(midpoint=0.,vmin=-100, vmax=100))
+    """
+    def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):
+        self.midpoint = midpoint
+        colors.Normalize.__init__(self, vmin, vmax, clip)
 
-
-
-
-
-
-
-
-    # plt.savefig('testing_volcano.png')
-    # Assign colors to up and down regulated genes
-    # d.loc[(d[logFC] >= 3) & (d[colnames['pval']] < 0.05), 'color'] = "green"  # upregulated
-    # d.loc[(d[logFC] <= -3) & (d[colnames['pval']] < 0.05), 'color'] = "red"  # downregulated
-    # d['color'].fillna('grey', inplace=True)
-
-    # plt.scatter(d['log2FC'], d[log_col'], c=d['color'])
-    # plt.xlabel('log2 Fold Change', fontsize=15, fontname="sans-serif", fontweight="bold")
-    # plt.ylabel('-log10(P-value)', fontsize=15, fontname="sans-serif", fontweight="bold")
-    # plt.xticks(fontsize=12, fontname="sans-serif")
-    # plt.yticks(fontsize=12, fontname="sans-serif")
-
-    # d = d.loc[(d['value1'] >= 10) & (d['value2'] >= 10)]
-
+    def __call__(self, value, clip=None):
+        # I'm ignoring masked values and all kinds of edge cases to make a
+        # simple example...
+        x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
+        return np.ma.masked_array(np.interp(value, x, y), np.isnan(value))
 

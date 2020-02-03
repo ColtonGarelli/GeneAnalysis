@@ -1,4 +1,4 @@
-from functions import parse_geo
+from data_processing import parse_geo
 
 geos = ['GSE52471', 'GSE72535', 'GSE81071']
 paths = ["/Users/coltongarelli/pyLibraries/GeneAnalysis/GSE52471_family.soft.gz",

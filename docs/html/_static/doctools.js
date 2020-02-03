@@ -161,7 +161,7 @@ var Documentation = {
   PLURAL_EXPR : function(n) { return n === 1 ? 0 : 1; },
   LOCALE : 'unknown',
 
-  // gettext and ngettext don't access this so that the functions
+  // gettext and ngettext don't access this so that the data_processing
   // can safely bound to a different name (_ = Documentation.gettext)
   gettext : function(string) {
     var translated = Documentation.TRANSLATIONS[string];

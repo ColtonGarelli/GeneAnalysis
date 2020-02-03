@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import os
-from functions import file_in, modify_dataframes
+from data_processing import file_in, modify_dataframes
 
 
 class TestingFiles:

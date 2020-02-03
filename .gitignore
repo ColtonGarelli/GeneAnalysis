@@ -5,6 +5,7 @@ __pycache__/
 
 # Reference files
 References
+Source/scripts
 
 # C extensions
 *.so
@@ -15,6 +16,7 @@ docs/_build/
 # pycharm
 
 # Distribution / packaging
+.idea/
 .Python
 build/
 develop-eggs/

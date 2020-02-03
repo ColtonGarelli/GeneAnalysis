@@ -84,12 +84,13 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Source</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Visualization.heatmap">Visualization.heatmap module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Visualization.stat_plots">Visualization.stat_plots module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Visualization.violin">Visualization.violin module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Visualization.volcano">Visualization.volcano module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-Visualization">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualization-heatmap-module">Visualization.heatmap module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#visualization-stat-plots-module">Visualization.stat_plots module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-Visualization.violin">Visualization.violin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-Visualization.volcano">Visualization.volcano module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-Visualization">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="functions.html">functions package</a></li>
@@ -100,6 +101,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Data Analysis with Python.html">Data Analysis with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Pytest Resources.html">Pytest Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Python Resources.html">Python Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#statements">Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#data-types">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#uniprotio">UniprotIO:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#seqrecord-class">SeqRecord Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#biosql">BioSQL:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#other-imported-modules">Other Imported Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python Resources.html#misc">Misc</a></li>
 </ul>
 
             
@@ -168,12 +176,10 @@
             
   <div class="section" id="visualization-package">
 <h1>Visualization package<a class="headerlink" href="#visualization-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-Visualization.heatmap">
-<span id="visualization-heatmap-module"></span><h2>Visualization.heatmap module<a class="headerlink" href="#module-Visualization.heatmap" title="Permalink to this headline">¶</a></h2>
-<p>Functions to create heatmaps of gene expression data</p>
+<div class="section" id="visualization-heatmap-module">
+<h2>Visualization.heatmap module<a class="headerlink" href="#visualization-heatmap-module" title="Permalink to this headline">¶</a></h2>
+<p>The heatmap module contains functions to produce clustermaps or heatmaps from gene expression data.</p>
+<span class="target" id="module-Visualization.heatmap"></span><p>Functions to create heatmaps of gene expression data</p>
 <dl class="function">
 <dt id="Visualization.heatmap.simple_clustermap">
 <code class="sig-prename descclassname">Visualization.heatmap.</code><code class="sig-name descname">simple_clustermap</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">gene_clust: bool = False</em>, <em class="sig-param">sample_clust: bool = False</em><span class="sig-paren">)</span> &#x2192; seaborn.matrix.ClusterGrid<a class="reference internal" href="_modules/Visualization/heatmap.html#simple_clustermap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Visualization.heatmap.simple_clustermap" title="Permalink to this definition">¶</a></dt>
@@ -237,18 +243,22 @@ a map is generated only using genes in genes_of_interest</p></li>
 <p>Returns:</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-Visualization.stat_plots">
-<span id="visualization-stat-plots-module"></span><h2>Visualization.stat_plots module<a class="headerlink" href="#module-Visualization.stat_plots" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<div class="section" id="visualization-stat-plots-module">
+<h3>Visualization.stat_plots module<a class="headerlink" href="#visualization-stat-plots-module" title="Permalink to this headline">¶</a></h3>
+<p>The stat_plots module contains functions to plot density maps, PCA, and potentially other statistical representations
+of data including ML (tSNE, UMAP,</p>
+<span class="target" id="module-Visualization.stat_plots"></span><dl class="function">
 <dt id="Visualization.stat_plots.density_plot">
-<code class="sig-prename descclassname">Visualization.stat_plots.</code><code class="sig-name descname">density_plot</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Visualization/stat_plots.html#density_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Visualization.stat_plots.density_plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">Visualization.stat_plots.</code><code class="sig-name descname">density_plot</code><span class="sig-paren">(</span><em class="sig-param">df: pandas.core.frame.DataFrame</em>, <em class="sig-param">batch: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Visualization/stat_plots.html#density_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Visualization.stat_plots.density_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a density plot from a DataFrame</p>
 <p>Plot density of all samples in df. All columns should be of the same data (e.g. log2fc, read counts, p-values.
 Density plots can be used to determine presence of batch effects</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>df</strong> – a DataFrame containing sample data</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – a DataFrame containing sample data</p></li>
+<li><p><strong>batch</strong> – a dictionary mapping each batch to a list of experiments</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A density plot</p>
@@ -281,7 +291,7 @@ for batch effect or correction. PCA can also be used to determine correlation of
 
 </div>
 <div class="section" id="module-Visualization.violin">
-<span id="visualization-violin-module"></span><h2>Visualization.violin module<a class="headerlink" href="#module-Visualization.violin" title="Permalink to this headline">¶</a></h2>
+<span id="visualization-violin-module"></span><h3>Visualization.violin module<a class="headerlink" href="#module-Visualization.violin" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="Visualization.violin.violin_plot">
 <code class="sig-prename descclassname">Visualization.violin.</code><code class="sig-name descname">violin_plot</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">cols: dict</em>, <em class="sig-param">genes: [] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Visualization/violin.html#violin_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Visualization.violin.violin_plot" title="Permalink to this definition">¶</a></dt>
@@ -291,7 +301,7 @@ for batch effect or correction. PCA can also be used to determine correlation of
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>df</strong> – DataFrame containing logFC and p-value. <strong>Must</strong> contain logfc and p-value data from one experiment</p></li>
-<li><p><strong>genes</strong> – </p></li>
+<li><p><strong>genes</strong> – a list of genes</p></li>
 <li><p><strong>cols</strong> – </p></li>
 </ul>
 </dd>
@@ -303,7 +313,7 @@ for batch effect or correction. PCA can also be used to determine correlation of
 
 </div>
 <div class="section" id="module-Visualization.volcano">
-<span id="visualization-volcano-module"></span><h2>Visualization.volcano module<a class="headerlink" href="#module-Visualization.volcano" title="Permalink to this headline">¶</a></h2>
+<span id="visualization-volcano-module"></span><h3>Visualization.volcano module<a class="headerlink" href="#module-Visualization.volcano" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="Visualization.volcano.display_vals">
 <code class="sig-prename descclassname">Visualization.volcano.</code><code class="sig-name descname">display_vals</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">genes_to_display</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Visualization/volcano.html#display_vals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Visualization.volcano.display_vals" title="Permalink to this definition">¶</a></dt>
@@ -334,7 +344,8 @@ for batch effect or correction. PCA can also be used to determine correlation of
 
 </div>
 <div class="section" id="module-Visualization">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Visualization" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h3>Module contents<a class="headerlink" href="#module-Visualization" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 

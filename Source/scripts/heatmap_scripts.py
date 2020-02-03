@@ -1,5 +1,5 @@
-import functions.file_in as file_in
-import functions.modify_dataframes as modify_dataframes
+import data_processing.file_in as file_in
+import data_processing.modify_dataframes as modify_dataframes
 import Source.Visualization.heatmap as heatmap
 import os
 import matplotlib.pyplot as plt

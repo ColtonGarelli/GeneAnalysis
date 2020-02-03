@@ -583,7 +583,7 @@
     };
   };
 
-  // Returns a function that is the composition of a list of functions, each
+  // Returns a function that is the composition of a list of data_processing, each
   // consuming the return value of the function that follows.
   _.compose = function() {
     var funcs = arguments;
@@ -868,7 +868,7 @@
     return (''+string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;');
   };
 
-  // Add your own custom functions to the Underscore object, ensuring that
+  // Add your own custom data_processing to the Underscore object, ensuring that
   // they're correctly added to the OOP wrapper as well.
   _.mixin = function(obj) {
     each(_.functions(obj), function(name){
@@ -942,7 +942,7 @@
 
   // If Underscore is called as a function, it returns a wrapped object that
   // can be used OO-style. This wrapper holds altered versions of all the
-  // underscore functions. Wrapped objects may be chained.
+  // underscore data_processing. Wrapped objects may be chained.
   var wrapper = function(obj) { this._wrapped = obj; };
 
   // Expose `wrapper.prototype` as `_.prototype`
@@ -953,7 +953,7 @@
     return chain ? _(obj).chain() : obj;
   };
 
-  // A method to easily add functions to the OOP wrapper.
+  // A method to easily add data_processing to the OOP wrapper.
   var addToWrapper = function(name, func) {
     wrapper.prototype[name] = function() {
       var args = slice.call(arguments);
@@ -962,10 +962,10 @@
     };
   };
 
-  // Add all of the Underscore functions to the wrapper object.
+  // Add all of the Underscore data_processing to the wrapper object.
   _.mixin(_);
 
-  // Add all mutator Array functions to the wrapper.
+  // Add all mutator Array data_processing to the wrapper.
   each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
     var method = ArrayProto[name];
     wrapper.prototype[name] = function() {
@@ -977,7 +977,7 @@
     };
   });
 
-  // Add all accessor Array functions to the wrapper.
+  // Add all accessor Array data_processing to the wrapper.
   each(['concat', 'join', 'slice'], function(name) {
     var method = ArrayProto[name];
     wrapper.prototype[name] = function() {

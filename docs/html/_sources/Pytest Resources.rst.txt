@@ -1,6 +1,5 @@
-****************
 Pytest Resources
-****************
+=================
 
 
 Some links to relevant Pytest resources
